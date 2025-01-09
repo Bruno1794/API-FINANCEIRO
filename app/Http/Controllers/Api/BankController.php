@@ -13,10 +13,19 @@ use Illuminate\Support\Facades\Auth;
 class BankController extends Controller
 {
     //
+    public function show(): JsonResponse
+    {
+        $bank = Bank::where('user_id', Auth::id())->get();
+        return response()->json([
+            'success' => true,
+            'banks' => $bank,
+        ], 200);
+    }
+
     public function store(Request $request): JsonResponse
     {
         try {
-            if(Auth::check()){
+            if (Auth::check()) {
                 $banck = Bank::create([
                     'name' => $request->name,
                     'balance' => $request->balance,
@@ -30,21 +39,18 @@ class BankController extends Controller
                     'banck' => $banck,
                     'msg' => 'Salvo com sucesso!'
                 ], 200);
-            }else{
+            } else {
                 return response()->json([
                     'success' => false,
-                    'msg' =>'Usuario nao autenticado'
-                ]);
+                    'msg' => 'Usuario nao autenticado'
+                ], 400);
             }
-
-
-        }catch (\Exception $error){
+        } catch (\Exception $error) {
             return response()->json([
                 'success' => false,
                 'msg' => $error->getMessage()
-            ]);
-    }
-
+            ], 400);
+        }
     }
 
     public function update(Request $request, Bank $bank): JsonResponse
@@ -72,10 +78,10 @@ class BankController extends Controller
         }
     }
 
-    public function show(Request $request, Bank $bank): JsonResponse
+    public function showId(Bank $bank): JsonResponse
     {
         if (Auth::id() === $bank->user_id) {
-            Bank::where('id', $request->id)->first();
+            Bank::where('id', $bank->id)->first();
 
             return response()->json([
                 'success' => true,
@@ -84,9 +90,29 @@ class BankController extends Controller
         } else {
             return response()->json([
                 'success' => false,
-                'msg' => "Não possivel fazer a alteração"
+                'msg' => "Nenhum registro encontrado"
 
             ]);
         }
     }
+
+    public function destroy(Bank $bank): JsonResponse
+    {
+        if (Auth::id() === $bank->user_id) {
+            Bank::where('id', $bank->id)->delete();
+
+            return response()->json([
+                'success' => true,
+                'msg' => 'Removido com sucesso!'
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'msg' => 'Falha ao deletar'
+
+            ]);
+        }
+    }
+
+
 }
