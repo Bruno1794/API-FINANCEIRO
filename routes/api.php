@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\BankController;
 use App\Http\Controllers\Api\CardController;
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\URLController;
+use \App\Http\Controllers\Api\ProviderController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('login', [LoginController::class, 'login']);
@@ -23,5 +24,12 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('create-card',[CardController::class,'store']);
     Route::delete('delete-card/{card}',[CardController::class,'destroy']);
     Route::put('update-card/{card}',[CardController::class,'update']);
+
+    ##Rotas Providers
+    Route::get('providers',[ProviderController::class,'index']);
+    Route::get('show-provider/{provider}',[ProviderController::class,'show']);
+    Route::post('create-provider',[ProviderController::class,'store']);
+    Route::put('update-provider/{provider}',[ProviderController::class,'update']);
+    Route::delete('delete-provider/{provider}',[ProviderController::class,'destroy']);
 
 });
