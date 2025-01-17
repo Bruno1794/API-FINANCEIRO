@@ -81,4 +81,17 @@ class ProviderController extends Controller
         }
 
     }
+
+    public function autoComplete(Request $request):JsonResponse
+    {
+        $providers = Provider::where('user_id', auth()->id())
+            ->where('name','like','%'.$request->p.'%')
+            ->limit(10)->get();
+        return response()->json([
+            'success' => true,
+            'providers' => $providers,
+
+        ]);
+
+    }
 }
