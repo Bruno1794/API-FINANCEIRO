@@ -26,7 +26,7 @@ class LoginController extends Controller
         }else{
             return response()->json([
                 'success' => false,
-                'message' => 'Usuario ou Senha Incorreto!'
+                'message' => 'Usuario ou Senha Incorretos!'
             ]);
         }
 
