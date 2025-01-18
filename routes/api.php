@@ -38,7 +38,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('debits',[DebitController::class,'index']);
     Route::get('debits-paid',[DebitController::class,'indexPaid']);
     Route::get('show-debit/{debit}',[DebitController::class,'show']);
-    Route::get('quit-debit/{debit}',[DebitController::class,'updateQuit']);
-    Route::get('delete-debit/{debit}',[DebitController::class,'destroy']);
+    Route::put('quit-debit/{debit}',[DebitController::class,'updateQuit']);
+    Route::delete('delete-debit/{debit}',[DebitController::class,'destroy']);
     Route::post('create-debit',[DebitController::class,'store']);
 });
