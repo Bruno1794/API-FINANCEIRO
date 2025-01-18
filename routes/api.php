@@ -12,6 +12,8 @@ Route::post('login', [LoginController::class, 'login'])->name('name');
 Route::get('urls', [UrlController::class, 'index']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::post('logout', [LoginController::class, 'logout']);
+
     ##ROTAS DE BANCOS
     Route::post('create-bank', [BankController::class, 'store']);
     Route::put('update-bank/{bank}', [BankController::class, 'update']);
