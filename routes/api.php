@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\BankController;
 use App\Http\Controllers\Api\CardController;
+use App\Http\Controllers\Api\DebitController;
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\URLController;
 use \App\Http\Controllers\Api\ProviderController;
@@ -32,4 +33,12 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('update-provider/{provider}',[ProviderController::class,'update']);
     Route::delete('delete-provider/{provider}',[ProviderController::class,'destroy']);
 
+
+    ##debit
+    Route::get('debits',[DebitController::class,'index']);
+    Route::get('debits-paid',[DebitController::class,'indexPaid']);
+    Route::get('show-debit/{debit}',[DebitController::class,'show']);
+    Route::get('quit-debit/{debit}',[DebitController::class,'updateQuit']);
+    Route::get('delete-debit/{debit}',[DebitController::class,'destroy']);
+    Route::post('create-debit',[DebitController::class,'store']);
 });
