@@ -8,7 +8,7 @@ use App\Http\Controllers\Api\URLController;
 use \App\Http\Controllers\Api\ProviderController;
 use Illuminate\Support\Facades\Route;
 
-Route::post('login', [LoginController::class, 'login']);
+Route::post('login', [LoginController::class, 'login'])->name('name');
 Route::get('urls', [UrlController::class, 'index']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
